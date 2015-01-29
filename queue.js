@@ -16,7 +16,7 @@ jobs.process('run bot', 10, function(job, done) {
    * @param {Object[]} args - the arguments for the command
    * @param {callback} callback - the callback function to run after command has finished
    */
-  
+
   function run_cmd(cmd, args, callback ) {
     var spawn = require('child_process').spawn;
     var child = spawn(cmd, args);
@@ -28,7 +28,7 @@ jobs.process('run bot', 10, function(job, done) {
 
   run_cmd('node', ['-e', job.data.code], function(data) {
     debug(data);
-    done();
+    done(null,data);
   });
 });
 

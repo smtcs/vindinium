@@ -4,19 +4,25 @@
 
 <br />
 <form class="form-button" method="post" id="saveForm">
-  <input id="code" type="hidden" name="code"></input>
+  <input class="code" type="hidden" name="code"></input>
   <input type="submit" value="Save" class="btn btn-primary"></input>
 </form>
 
-<form class="form-button" method="post" action="/bots/run/{{id}}">
+<form class="form-button" method="post" action="/bots/run/{{id}}" id="runForm">
+  <input class="code" type="hidden" name="code"></input>
   <input type="submit" value"Run" class="btn btn-success"></input>
 </form>
 
 <script>
   $('#saveForm').on('submit', function(ev) {
     ev.preventDefault();
-    $('#code').val(editor.getValue());
-    console.log($('#code').val())
+    $('.code').val(editor.getValue());
+    this.submit();
+  });
+
+  $('#runForm').on('submit', function(ev) {
+    ev.preventDefault();
+    $('.code').val(editor.getValue());
     this.submit();
   });
 </script>
