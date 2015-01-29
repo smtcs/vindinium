@@ -1,1 +1,18 @@
 <h1>Do bot stuff</h1>
+
+{{#if bots}}
+<table class="table">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+  </tr>
+  {{#each bots}}
+    <tr>
+      <td><a href="/b/d/{{id}}">{{id}}</a></td>
+      <td>{{name}}</td>
+    </tr>
+  {{/each}}
+</table>
+{{else}}
+  <h2>Sorry, no bots in the DB</h2>
+{{/if}}
