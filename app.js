@@ -20,10 +20,6 @@ hbs.registerPartials(__dirname + '/views/partials');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-// uncomment after placing your favicon in /public
-// app.use(favicon(__dirname + '/public/favicon.ico'));
-// use the dev logger
-app.use(logger('dev'));
 // bodyparser json middleware
 app.use(bodyParser.json());
 // bodyparser urlencoding middleware
@@ -51,6 +47,8 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
+  // use the dev logger
+  app.use(logger('dev'));
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {

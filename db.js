@@ -4,6 +4,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/vind');
 
 var BotSchema = mongoose.Schema({
   name: {type: String, default: '', unique: true},
+  runs: {type: Number, default: 0},
   code: {type: String, default: ''}
 });
 

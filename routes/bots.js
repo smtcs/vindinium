@@ -50,8 +50,10 @@ router.post('/run/:id', function(req, res) {
     job.save();
     // bug in kue makes it so I have to wait a few ms before the job.id works
     job.on('complete', function(result) {
-      res.render('bots/result', {id: job.id, result: result});
+      res.render('bots/result', {id: job.id, runs: bot.runs, result: result});
     });
+    bot.runs += 1;
+    bot.save();
   });
 });
 
