@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var Bot = require('mongoose').model('Bot')
+var Bot = require('mongoose').model('Bot');
+var jobs = require('../queue').jobs;
 
 /* @GET index for bots */
 router.get('/', function(req, res) {
@@ -26,9 +27,14 @@ router.get('/e/:id', function(req, res) {
   });
 });
 
+/* @POST update file */
 router.post('/e/:id', function(req, res) {
   Bot.findById(req.params.id, function(err, bot) {
-    
+    bot.code = req.body.code;
+    bot.save(function (err) {
+      if (err) return handleError(err);
+      res.redirect(req.params.id);
+    });
   });
 });
 

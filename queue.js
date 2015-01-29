@@ -1,7 +1,7 @@
 var kue = require('kue');
 var jobs = kue.createQueue();
 
-jobs.process('bot', function(job, done) {
+jobs.process('bot', 10, function(job, done) {
   /**
    * Run command in a subprocess provided by node
    *
@@ -25,12 +25,6 @@ jobs.process('bot', function(job, done) {
 
   console.log('Job', job.id, 'is done');
   done();
-});
-
-var hworld = jobs.create('bot', {
-  code: "console.log('Hello World')"
-}).save( function(err){
-  if( !err ) console.log( hworld.id );
 });
 
 module.exports = {
