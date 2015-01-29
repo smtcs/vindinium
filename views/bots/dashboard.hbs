@@ -9,4 +9,12 @@
 
 <p>code: <pre><code>{{bot.code}}</code></pre></p>
 
-<script>hljs.initHighlightingOnLoad();</script>
+<script>
+  hljs.initHighlightingOnLoad();
+
+  $('#runForm').on('submit', function(ev) {
+    ev.preventDefault();
+    $('.code').val(editor.getValue());
+    this.submit();
+  });
+</script>
