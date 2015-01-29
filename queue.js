@@ -2,7 +2,7 @@ var debug = require('debug')('app:queue');
 var kue = require('kue');
 var jobs = kue.createQueue();
 
-jobs.process('run bot', 10, function(job, done) {
+jobs.process('run bot', 20, function(job, done) {
   /**
    * This callback is called `callback` and executes when something finishes
    * @callback callback

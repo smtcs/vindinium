@@ -20,10 +20,7 @@ router.get('/dashboard/:id', function(req, res) {
 /* @GET show edit for :id */
 router.get('/edit/:id', function(req, res) {
   Bot.findById(req.params.id, function(err, bot) {
-    res.render('bots/editor', {
-      id: req.params.id,
-      code: bot.code
-    });
+    res.render('bots/editor', {bot: bot});
   });
 });
 
