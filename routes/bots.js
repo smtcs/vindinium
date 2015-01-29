@@ -11,14 +11,14 @@ router.get('/', function(req, res) {
 });
 
 /* @GET show dahsboard for :id */
-router.get('/d/:id', function(req, res) {
+router.get('/dashboard/:id', function(req, res) {
   Bot.findById(req.params.id, function(err, bot) {
     res.render('bots/dashboard', {bot:bot});
   });
 });
 
 /* @GET show edit for :id */
-router.get('/e/:id', function(req, res) {
+router.get('/edit/:id', function(req, res) {
   Bot.findById(req.params.id, function(err, bot) {
     res.render('bots/editor', {
       id: req.params.id,
@@ -28,7 +28,7 @@ router.get('/e/:id', function(req, res) {
 });
 
 /* @POST update file */
-router.post('/e/:id', function(req, res) {
+router.post('/edit/:id', function(req, res) {
   Bot.findById(req.params.id, function(err, bot) {
     bot.code = req.body.code;
     bot.save(function (err) {
@@ -40,13 +40,25 @@ router.post('/e/:id', function(req, res) {
 
 /* @POST run bot */
 router.post('/run/:id', function(req, res) {
-  res.render('bots/play')
+  // find bot in db and assign contets to `bot`
+  Bot.findById(req.params.id, function(err, bot) {
+    // create job wit hthe job queue
+    var job = jobs.create('run bot', {
+      title: bot.name,
+      code: bot.code
+    });
+    job.save();
+    // bug in kue makes it so I have to wait a few ms before the job.id works
+    setTimeout(function() {
+      res.send('Job with id '+job.id+' started');
+    }, 50);
+  });
 });
 
 /* @GET redirect by id */
 /* HAS TO BE LAST ROUTE IN FILE */
 router.get('/:id', function(req, res) {
-  res.redirect('d/'+req.params.id);
+  res.redirect('dashboard/'+req.params.id);
 });
 
 module.exports = router;

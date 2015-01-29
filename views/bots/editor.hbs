@@ -1,11 +1,15 @@
-<h1>Editing id: {{id}} <a href="/b/d/{{id}}">Back</a></h1>
+<h1>Editing id: {{id}} <a href="/bots/dashboard/{{id}}">Back</a></h1>
 
 {{> editor value=code}}
 
 <br />
-<form name="save" method="post" id="saveForm">
+<form class="form-button" method="post" id="saveForm">
   <input id="code" type="hidden" name="code"></input>
   <input type="submit" value="Save" class="btn btn-primary"></input>
+</form>
+
+<form class="form-button" method="post" action="/bots/run/{{id}}">
+  <input type="submit" value"Run" class="btn btn-success"></input>
 </form>
 
 <script>
