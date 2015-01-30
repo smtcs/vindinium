@@ -1,25 +1,29 @@
-<h1>Editing id: {{bot.id}} <a href="/bots/dashboard/{{bot.id}}">Back</a></h1>
+<h3>Editing id: {{bot.id}} <a href="/bots/dashboard/{{bot.id}}">Back</a>
+  <a class="btn btn-primary" onclick="save();">Save</a>
+  {{> run}}</h3>
+<p class="messages" style="display:none"></p>
 
 {{> editor value=bot.code}}
 
-<br />
-<form class="form-button" method="post" id="saveForm">
-  <input class="code" type="hidden" name="code"></input>
-  <input type="submit" value="Save" class="btn btn-primary"></input>
-</form>
-
-{{> run}}
-
 <script>
-  $('#saveForm').on('submit', function(ev) {
-    ev.preventDefault();
-    $('.code').val(editor.getValue());
-    this.submit();
-  });
-
   $('#runForm').on('submit', function(ev) {
     ev.preventDefault();
     $('.code').val(editor.getValue());
     this.submit();
   });
+
+  function save() {
+    $.ajax({
+      type: 'POST',
+      data: {code: editor.getValue(), id: "{{bot.id}}" }
+    }).done(function() {
+      console.log('saved');
+      $('.messages').text('Successfully saved');
+      $('.messages').slideDown(function() {
+        setTimeout(function() {
+          $('.messages').slideUp();
+        }, 2000);
+      });
+    });
+  }
 </script>

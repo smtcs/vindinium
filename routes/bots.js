@@ -27,11 +27,13 @@ router.get('/edit/:id', function(req, res) {
 /* @POST update file */
 router.post('/edit/:id', function(req, res) {
   Bot.findById(req.params.id, function(err, bot) {
-    bot.code = req.body.code;
-    bot.save(function (err) {
-      if (err) return handleError(err);
-      res.redirect(req.params.id);
-    });
+    if(req.body.id === req.params.id) {
+      bot.code = req.body.code;
+      bot.save(function (err) {
+        if (err) return handleError(err);
+        res.redirect(req.params.id);
+      });
+    }
   });
 });
 
