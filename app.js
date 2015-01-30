@@ -4,12 +4,16 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 var hbs = require('hbs');
 var kue = require('./queue').kue;
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 require('./db');
 
 var routes = require('./routes/index');
 var bots = require('./routes/bots');
+var users = require('./routes/users');
 
 var app = express();
 
@@ -26,12 +30,22 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse cookies
 app.use(cookieParser());
+// passport things
+app.use(session({secret: 'iz secret'}));
+app.use(passport.initialize());
+app.use(passport.session());
 // use less stylesheets
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 // serve files from public folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+var User = require('./users');
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use('/', routes);
+app.use('/auth', users);
 app.use('/bots', bots);
 app.use('/queue', kue.app);
 

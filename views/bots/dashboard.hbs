@@ -7,14 +7,14 @@
 <p>name: {{bot.name}}</p>
 <p>runs: {{bot.runs}}</p>
 
-<p>code: <pre><code>{{bot.code}}</code></pre></p>
+<p>code: <pre><code id="code">{{bot.code}}</code></pre></p>
 
 <script>
   hljs.initHighlightingOnLoad();
 
   $('#runForm').on('submit', function(ev) {
     ev.preventDefault();
-    $('.code').val(editor.getValue());
+    $('.code').val($('#code').val());
     this.submit();
   });
 </script>
