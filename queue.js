@@ -1,3 +1,4 @@
+var Promise = require('bluebird');
 var debug = require('debug')('app:queue');
 var kue = require('kue');
 var jobs = kue.createQueue();
@@ -14,21 +15,22 @@ jobs.process('run bot', 20, function(job, done) {
    *
    * @param {string} cmd - the command to run
    * @param {Object[]} args - the arguments for the command
-   * @param {callback} callback - the callback function to run after command has finished
    */
 
-  function run_cmd(cmd, args, callback ) {
-    var spawn = require('child_process').spawn;
-    var child = spawn(cmd, args);
-    var resp = "";
+  function run_cmd(cmd, args) {
+    return new Promise(function(resolve, reject) {
+      var spawn = require('child_process').spawn;
+      var child = spawn(cmd, args);
+      var resp = "";
 
-    child.stdout.on('data', function(buffer){ resp += buffer.toString();});
-    child.stdout.on('end', function(){callback (resp);});
+      child.stdout.on('data', function(buffer){ resp += buffer.toString();});
+      child.stdout.on('end', function(){resolve(resp);});
+    });
   }
 
-  run_cmd('node', ['-e', job.data.code], function(data) {
+  run_cmd('node', ['-e', job.data.code]).then(function(data) {
     debug(data);
-    done(null,data);
+    done(null, data);
   });
 });
 

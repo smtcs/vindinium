@@ -1,17 +1,14 @@
-<h3>Editing id: {{bot.id}} <a href="/bots/dashboard/{{bot.id}}">Back</a>
+<h3>Editing id: {{bot.id}}
+  <a class="btn btn-info" href="/bots/dashboard/{{bot.id}}">Back</a>
   <a class="btn btn-primary" onclick="save();">Save</a>
-  {{> run}}</h3>
+  {{> run}}
+</h3>
+
 <p class="messages" style="display:none"></p>
 
 {{> editor value=bot.code}}
 
 <script>
-  $('#runForm').on('submit', function(ev) {
-    ev.preventDefault();
-    $('.code').val(editor.getValue());
-    this.submit();
-  });
-
   function save() {
     $.ajax({
       type: 'POST',
@@ -26,4 +23,20 @@
       });
     });
   }
+
+  editor.commands.addCommand({
+    name: 'save',
+    bindKey: {win: 'Ctrl-Enter',  mac: 'Command-Enter'},
+    exec: function(editor) {
+      save();
+    }
+  });
+
+  editor.commands.addCommand({
+    name: 'run',
+    bindKey: {win: 'Alt-Enter', mac: 'Ctrl-Enter'},
+    exec: function(editor) {
+      $('#runForm').submit();
+    }
+  })
 </script>

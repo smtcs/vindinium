@@ -5,28 +5,34 @@ var jobs = require('../queue').jobs;
 
 /* @GET index for bots */
 router.get('/', function(req, res) {
-  Bot.find({}, function(err, bots) {
+  Bot.find({}).exec().then(function(bots) {
     res.render('bots/index', {bots: bots});
+  }).then(null, function(err) {
+    console.log(err);
   });
 });
 
 /* @GET show dahsboard for :id */
 router.get('/dashboard/:id', function(req, res) {
-  Bot.findById(req.params.id, function(err, bot) {
+  Bot.findById(req.params.id).exec().then(function(bot) {
     res.render('bots/dashboard', {bot:bot});
+  }).then(null, function(err) {
+    console.log(err);
   });
 });
 
 /* @GET show edit for :id */
 router.get('/edit/:id', function(req, res) {
-  Bot.findById(req.params.id, function(err, bot) {
+  Bot.findById(req.params.id).exec().then(function(bot) {
     res.render('bots/editor', {bot: bot});
+  }).then(null, function(err) {
+    console.log(err);
   });
 });
 
 /* @POST update file */
 router.post('/edit/:id', function(req, res) {
-  Bot.findById(req.params.id, function(err, bot) {
+  Bot.findById(req.params.id).exec().then(function(bot) {
     if(req.body.id === req.params.id) {
       bot.code = req.body.code;
       bot.save(function (err) {
@@ -34,6 +40,8 @@ router.post('/edit/:id', function(req, res) {
         res.redirect(req.params.id);
       });
     }
+  }).then(null, function(err) {
+    console.log(err);
   });
 });
 

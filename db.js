@@ -14,11 +14,13 @@ mongoose.connection.on('error', console.error.bind(console, 'connection error:')
 
 var bot = new Bot({name: 'test', code: "console.log('hi');"});
 
-Bot.count({}, function(err, c) {
+Bot.count({}).exec().then(function(c) {
   debug('Count: '+c);
   if(c < 1) {
-    bot.save(function(err, bot) {
+    bot.save().then(function(err, bot) {
       debug('bot saved');
     });
   }
+}).then(null, function(err) {
+  console.log(err);
 });
