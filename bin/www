@@ -18,5 +18,9 @@ if(cluster.isMaster) {
     debug('clustered ' + clusters + ' times');
   });
 } else {
-  require('./server');
+  var app = require('./server');
+  app.set('worker', cluster.worker.id);
+  app.set('workers', cluster.workers);
 }
+
+module.exports = cluster;

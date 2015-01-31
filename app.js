@@ -9,6 +9,7 @@ var hbs = require('hbs');
 var kue = require('./queue').kue;
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var worker = require('./bin/www');
 
 require('./db');
 require('./users');
@@ -52,6 +53,14 @@ app.use(function (req, res, next) {
   res.locals.login = req.isAuthenticated();
   if(req.isAuthenticated()) {
     res.locals.user = req.user;
+  }
+  if(req.isAuthenticated() && req.user.admin) {
+    res.locals.admin = true;
+    res.locals.pid = process.pid;
+    res.locals.worker = {
+      id: app.get('worker'),
+      count: require('os').cpus().length
+    };
   }
   next();
 });
