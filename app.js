@@ -9,8 +9,11 @@ var hbs = require('hbs');
 var kue = require('./queue').kue;
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+
 require('./db');
 require('./users');
+
+var mid = require('./middleware');
 
 var routes = require('./routes/index');
 var bots = require('./routes/bots');
@@ -45,9 +48,17 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use(function (req, res, next) {
+  res.locals.login = req.isAuthenticated();
+  if(req.isAuthenticated()) {
+    res.locals.user = req.user;
+  }
+  next();
+});
+
 app.use('/', routes);
-app.use('/auth', users);
-app.use('/bots', bots);
+app.use('/', users);
+app.use('/bots', mid.loggedIn, bots);
 app.use('/queue', kue.app);
 
 // catch 404 and forward to error handler

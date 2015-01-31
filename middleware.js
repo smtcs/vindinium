@@ -4,7 +4,8 @@ function loggedIn(req, res, next) {
   if(req.user) {
     next();
   } else {
-    res.redirect('/auth/login');
+    req.session.returnTo = req.originalUrl;
+    res.redirect('/login');
   }
 }
 
@@ -18,7 +19,16 @@ function isAdmin(req, res, next) {
   });
 }
 
+function isLoggedIn(req, res, next) {
+  if(req.user) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 module.exports = {
   loggedIn: loggedIn,
+  isLoggedIn: isLoggedIn,
   isAdmin: isAdmin
 };
