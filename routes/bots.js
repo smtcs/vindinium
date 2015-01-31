@@ -1,14 +1,49 @@
 var express = require('express');
 var router = express.Router();
 var Bot = require('mongoose').model('Bot');
+var User = require('mongoose').model('User');
 var jobs = require('../queue').jobs;
+var mid = require('../middleware');
+
+var err = function(err) {
+  console.log(err);
+};
 
 /* @GET index for bots */
-router.get('/', function(req, res) {
-  Bot.find({}).exec().then(function(bots) {
-    res.render('bots/index', {bots: bots});
-  }).then(null, function(err) {
-    console.log(err);
+router.get('/', mid.loggedIn, function(req, res) {
+  User.findById(req.user._id).exec().then(function(user) {
+    if(req.user.admin) {
+      Bot.find({}).exec().then(function(bots) {
+        res.render('bots/index', {bots: bots});
+      });
+    } else {
+      Bot.find({
+        '_id': { $in: user.bots}
+      }).exec().then(function(bots) {
+        res.render('bots/index', {bots: bots});
+      });
+    }
+  });
+});
+
+router.get('/create', function(req, res) {
+  if(req.user) {
+    res.render('bots/create');
+  } else {
+    res.redirect('/auth/login');
+  }
+});
+
+router.post('/create', function(req, res) {
+  User.findById(req.user._id).exec().then(function(user) {
+    var bot = new Bot({
+      name: req.body.botName,
+      code:"var Bot = require('bot');\n\nvar bot = new Bot('YOUR_KEY_HERE', 'training');"
+    });
+    bot.save();
+    user.bots.push(bot._id);
+    user.save();
+    res.redirect('/bots/'+bot._id);
   });
 });
 
@@ -16,18 +51,14 @@ router.get('/', function(req, res) {
 router.get('/dashboard/:id', function(req, res) {
   Bot.findById(req.params.id).exec().then(function(bot) {
     res.render('bots/dashboard', {bot:bot});
-  }).then(null, function(err) {
-    console.log(err);
-  });
+  }).then(null, err);
 });
 
 /* @GET show edit for :id */
 router.get('/edit/:id', function(req, res) {
   Bot.findById(req.params.id).exec().then(function(bot) {
     res.render('bots/editor', {bot: bot});
-  }).then(null, function(err) {
-    console.log(err);
-  });
+  }).then(null, err);
 });
 
 /* @POST update file */
@@ -40,9 +71,7 @@ router.post('/edit/:id', function(req, res) {
         res.redirect(req.params.id);
       });
     }
-  }).then(null, function(err) {
-    console.log(err);
-  });
+  }).then(null, err);
 });
 
 /* @POST run bot */

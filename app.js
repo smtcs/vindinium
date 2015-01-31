@@ -10,6 +10,7 @@ var kue = require('./queue').kue;
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 require('./db');
+require('./users');
 
 var routes = require('./routes/index');
 var bots = require('./routes/bots');
@@ -39,7 +40,7 @@ app.use(require('less-middleware')(path.join(__dirname, 'public')));
 // serve files from public folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-var User = require('./users');
+var User = require('mongoose').model('User');
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());

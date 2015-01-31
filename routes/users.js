@@ -1,10 +1,17 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-var User = require('../users');
+var User = require('mongoose').model('User');
+var mid = require('../middleware');
 
-router.get('/', function(req, res) {
+router.get('/', mid.loggedIn, function(req, res) {
   res.render('auth/index', {user: req.user});
+});
+
+router.get('/users', mid.loggedIn, mid.isAdmin, function(req, res) {
+  User.find({}).exec().then(function(users) {
+    res.render('auth/users', {users: users});
+  });
 });
 
 router.get('/login', function(req, res) {
@@ -12,7 +19,7 @@ router.get('/login', function(req, res) {
 });
 
 router.post('/login', passport.authenticate('local'), function(req, res) {
-  res.redirect('/');
+  res.redirect('/bots');
 });
 
 router.get('/logout', function(req, res) {
@@ -27,7 +34,7 @@ router.get('/register', function(req, res) {
 router.post('/register', function(req, res, next) {
   User.register(new User({username: req.body.username}), req.body.password, function(err) {
     if (err) { return next(err); }
-    res.redirect('/bots');
+    return res.redirect('/bots');
   });
 });
 

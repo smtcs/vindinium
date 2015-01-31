@@ -1,0 +1,7 @@
+<h1>Users</h1>
+
+<ul>
+  {{#each users}}
+    <li><b>{{username}}</b> admin: {{admin}}{{#if bots}}, bots: {{bots}}{{/if}}</li>
+  {{/each}}
+</ul>
