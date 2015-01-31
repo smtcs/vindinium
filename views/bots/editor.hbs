@@ -26,7 +26,7 @@
 
   editor.commands.addCommand({
     name: 'save',
-    bindKey: {win: 'Ctrl-Enter',  mac: 'Command-Enter'},
+    bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
     exec: function(editor) {
       save();
     }
@@ -34,7 +34,7 @@
 
   editor.commands.addCommand({
     name: 'run',
-    bindKey: {win: 'Alt-Enter', mac: 'Ctrl-Enter'},
+    bindKey: {win: 'Ctrl-Enter', mac: 'Command-Enter'},
     exec: function(editor) {
       $('#runForm').submit();
     }

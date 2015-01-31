@@ -9,6 +9,16 @@ var err = function(err) {
   console.log(err);
 };
 
+function canViewBot(req, res, next) {
+  User.findById(req.user._id).exec().then(function(user) {
+    if(user.admin || user.bots.indexOf(req.params.id) > -1) {
+      next();
+    } else {
+      res.redirect('/bots');
+    }
+  }).then(null, err);
+}
+
 /* @GET index for bots */
 router.get('/', function(req, res) {
   User.findById(req.user._id).exec().then(function(user) {
@@ -38,21 +48,21 @@ router.post('/create', function(req, res) {
       owner: req.user
     });
     bot.save();
-    user.bots.push(bot._id);
+    user.bots.push({name: bot.name, id: bot._id});
     user.save();
-    res.redirect('/bots/'+bot._id, {bot:true});
+    res.redirect('/bots/'+bot._id);
   });
 });
 
 /* @GET show dahsboard for :id */
-router.get('/dashboard/:id', function(req, res) {
+router.get('/dashboard/:id', canViewBot, function(req, res) {
   Bot.findById(req.params.id).exec().then(function(bot) {
     res.render('bots/dashboard', {bot:bot});
   }).then(null, err);
 });
 
 /* @GET show edit for :id */
-router.get('/edit/:id', function(req, res) {
+router.get('/edit/:id', canViewBot, function(req, res) {
   Bot.findById(req.params.id).exec().then(function(bot) {
     res.render('bots/editor', {bot: bot});
   }).then(null, err);

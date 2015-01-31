@@ -35,7 +35,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse cookies
 app.use(cookieParser());
 // passport things
-app.use(session({secret: 'iz secret'}));
+app.use(session({secret: 'iz secret', saveUninitialized: true, resave: true}));
 app.use(passport.initialize());
 app.use(passport.session());
 // use less stylesheets

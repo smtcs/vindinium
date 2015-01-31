@@ -6,9 +6,9 @@
       <b>{{username}}</b>
       admin: {{admin}}
       {{#if bots}}
-        , bots:
+        bots:
         {{#each bots}}
-          <a href="/bots/{{this}}">{{this}}</a>
+          <a href="/bots/{{id}}">{{name}}</a>
         {{/each}}
       {{/if}}
     </li>

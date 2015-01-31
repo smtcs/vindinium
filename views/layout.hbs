@@ -31,13 +31,10 @@
             {{#if login}}
               <li class="dropdown">
                 <a aria-expanded="false" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
-                  {{user.username}}
-                  <span class="caret">
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="/logout">Log Out</a></li>
-                    </ul>
-                  </span>
-                </a>
+                  {{user.username}} <span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="/logout">Log Out</a></li>
+                  </ul>
               </li>
             {{else}}
               <li><a href="/register">Register</a></li>

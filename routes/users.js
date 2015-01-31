@@ -32,7 +32,7 @@ router.get('/register', function(req, res) {
 });
 
 router.post('/register', function(req, res, next) {
-  User.register(new User({username: req.body.username}), req.body.password, function(err) {
+  User.register(new User({username: req.body.username.toLowerCase()}), req.body.password, function(err) {
     if (err) { return next(err); }
     return res.redirect('/bots');
   });
