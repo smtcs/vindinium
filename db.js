@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var debug = require('debug')('app:mongo');
 mongoose.connect('mongodb://127.0.0.1:27017/vind');
 
 var BotSchema = mongoose.Schema({
@@ -13,14 +12,11 @@ var Bot = mongoose.model('Bot', BotSchema);
 
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 
-var bot = new Bot({name: 'test', code: "console.log('hi');"});
+var bot = new Bot({name: 'default', code: "var Bot = require('bot');\n\nvar bot = new Bot('YOUR_KEY_HERE', 'training');"});
 
 Bot.count({}).exec().then(function(c) {
-  debug('Count: '+c);
   if(c < 1) {
-    bot.save().then(function(err, bot) {
-      debug('bot saved');
-    });
+    bot.save();
   }
 }).then(null, function(err) {
   console.log(err);

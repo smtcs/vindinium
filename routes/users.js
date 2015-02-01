@@ -18,7 +18,7 @@ router.get('/login', function(req, res) {
   res.render('auth/login', {user: req.user});
 });
 
-router.post('/login', passport.authenticate('local'), function(req, res) {
+router.post('/login', passport.authenticate('local', {failureRedirect: '/login'}), function(req, res) {
   res.redirect(req.session.returnTo || '/bots');
 });
 
@@ -34,7 +34,9 @@ router.get('/register', function(req, res) {
 router.post('/register', function(req, res, next) {
   User.register(new User({username: req.body.username.toLowerCase()}), req.body.password, function(err) {
     if (err) { return next(err); }
-    return res.redirect('/bots');
+    passport.authenticate('local')(req, res, function() {
+      res.redirect('/bots');
+    });
   });
 });
 

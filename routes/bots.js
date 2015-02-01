@@ -41,16 +41,19 @@ router.get('/create', function(req, res) {
 });
 
 router.post('/create', function(req, res) {
+  var bot = Bot.findOne({name: 'default'});
   User.findById(req.user._id).exec().then(function(user) {
-    var bot = new Bot({
-      name: req.body.botName,
-      code:"var Bot = require('bot');\n\nvar bot = new Bot('YOUR_KEY_HERE', 'training');",
-      owner: req.user
+    Bot.findOne({name: 'default'}).exec().then(function(defaultBot){
+      var bot = new Bot({
+        name: req.body.botName,
+        code: defaultBot.code,
+        owner: req.user
+      });
+      bot.save();
+      user.bots.push({name: bot.name, id: bot._id});
+      user.save();
+      res.redirect('/bots/'+bot._id);
     });
-    bot.save();
-    user.bots.push({name: bot.name, id: bot._id});
-    user.save();
-    res.redirect('/bots/'+bot._id);
   });
 });
 

@@ -25,7 +25,12 @@
             {{/if}}
             {{#if user.admin}}
               <li><a href="/users">Users</a></li>
-              <p class="navbar-text">PID: {{pid}}</p><p class="navbar-text">Worker: {{worker.id}}/{{worker.count}}</p>
+              {{#if pid}}
+                <p class="navbar-text">PID: {{pid}}</p>
+              {{/if}}
+              {{#if worker}}
+                <p class="navbar-text">Worker: {{worker.id}}/{{worker.count}}</p>
+              {{/if}}
             {{/if}}
           </ul>
           <ul class="nav navbar-nav navbar-right">
