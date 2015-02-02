@@ -1,7 +1,7 @@
 var User = require('mongoose').model('User');
 
 function loggedIn(req, res, next) {
-  if(req.user) {
+  if(req.isAuthenticated()) {
     next();
   } else {
     req.session.returnTo = req.originalUrl;
@@ -14,7 +14,7 @@ function isAdmin(req, res, next) {
     if(user.admin) {
       next();
     } else {
-      res.redirect('/bots');
+      res.redirect(req.originalUrl);
     }
   });
 }
