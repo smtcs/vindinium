@@ -12,7 +12,7 @@ var Bot = mongoose.model('Bot', BotSchema);
 
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 
-var bot = new Bot({name: 'default', code: "var Bot = require('bot');\n\nvar bot = new Bot('YOUR_KEY_HERE', 'training');"});
+var bot = new Bot({name: 'default', code: "var Bot = require('bot').Bot;\nvar helpers = require('bot').helpers;\n\nvar bot = new Bot('YOUR_KEY_HERE', 'training');"});
 
 Bot.count({}).exec().then(function(c) {
   if(c < 1) {
