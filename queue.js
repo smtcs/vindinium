@@ -5,16 +5,11 @@ var jobs = kue.createQueue();
 
 jobs.process('run bot', 20, function(job, done) {
   /**
-   * This callback is called `callback` and executes when something finishes
-   * @callback callback
-   * @param {string} data - the data of the callback
-   */
-
-  /**
    * run_cmd - Run command in a subprocess provided by node
    *
    * @param {string} cmd - the command to run
    * @param {Object[]} args - the arguments for the command
+   * @returns {} - nothing
    */
 
   function run_cmd(cmd, args) {
