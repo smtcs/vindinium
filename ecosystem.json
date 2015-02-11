@@ -1,6 +1,6 @@
 {
   "apps" : [{
-    "name"      : "Vind",
+    "name"      : "vind",
     "script"    : "bin/www",
     "env_production" : {
       "NODE_ENV": "production",
