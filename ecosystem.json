@@ -2,13 +2,13 @@
   "apps" : [{
     "name"      : "vind",
     "script"    : "bin/www",
-    "env_production" : {
+    "env_prod" : {
       "NODE_ENV": "production",
       "MONGO_URL": "mongodb://user:pass@ds041861.mongolab.com:41861/vind-client"
     }
   }],
   "deploy" : {
-    "production" : {
+    "prod" : {
       "user" : "root",
       "host" : "104.236.186.249",
       "ref"  : "origin/master",
