@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1:27017/vind');
+mongoose.connect(process.env.MONGO_URL);
 
 var BotSchema = mongoose.Schema({
   name: {type: String, default: '', unique: true},
