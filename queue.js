@@ -1,7 +1,17 @@
 var Promise = require('bluebird');
 var debug = require('debug')('app:queue');
 var kue = require('kue');
-var jobs = kue.createQueue();
+if(process.env.REDIS_URL) {
+  var jobs = kue.createQueue({
+    redis: {
+      port: 10728,
+      host: 'tarpon.redistogo.com',
+      auth: '857e5c81f132d726a82d5bad47119b9e'
+    }
+  });
+} else {
+  var jobs = kue.createQueue();
+}
 
 jobs.process('run bot', 20, function(job, done) {
   /**
