@@ -19,7 +19,9 @@ jobs.process('run bot', 20, function(job, done) {
       var resp = "";
 
       child.stdout.on('data', function(buffer){ resp += buffer.toString();});
+      child.stderr.on('data', function(buffer){ resp += buffer.toString();});
       child.stdout.on('end', function(){resolve(resp);});
+      child.stderr.on('end', function(){resolve(resp);});
     });
   }
 
