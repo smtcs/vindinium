@@ -2,14 +2,14 @@ var Bot = require('bot');
 
 var bot = new Bot('nwiltp4r', 'training');
 var goDir;
-console.log(bot);
+//console.log(bot);
 // bot test code
 function botStart(callback){
-  console.log("going to run bot!");
+ // console.log("going to run bot!");
     bot.run(function(){
-      console.log("going to run afterPostRequest!");
+     // console.log("going to run afterPostRequest!");
       bot.afterPostRequest(function(){
-        console.log("going to run botBrain!");
+      //  console.log("going to run botBrain!");
         botBrain(function(){
           bot.requestAgain(goDir, botContinue());      
         });
@@ -18,9 +18,9 @@ function botStart(callback){
 }
 
 function botContinue(callback){
+  //console.log("bot Continiue!");
   bot.afterPostRequest(function(){
     botBrain(function(){
-      console.log(bot.map);
       bot.requestAagain(goDir, botContinue());
     });
   });
@@ -28,9 +28,12 @@ function botContinue(callback){
 
 
 function botBrain(cb){
-  goDir = "north";
+  //console.log("botBrain!");
+  var rand = Math.floor(Math.random() * 3);
+  var dirs = ["north", "south", "east", "west"];
+  goDir = dirs[rand];
 
-
+  //console.log(goDir);
 
 
 
