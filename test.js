@@ -9,7 +9,7 @@ function botInitialization(callback){
       console.log("going to run afterPostRequest! " + bot.data);
       bot.afterPostRequest(function(){
         console.log("going to run botBrain! " + bot.data);
-        bot.botBrain(callback);
+        botBrain(callback);
       });
     });
 
