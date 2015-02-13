@@ -9,7 +9,8 @@ function botInitialization(callback){
       console.log("going to run afterPostRequest! " + bot.data);
       bot.afterPostRequest(function(){
         console.log("going to run botBrain! " + bot.data);
-        botBrain(callback);
+        console.log(bot.yourBot.pos.y);
+        botBrain();
       });
     });
 
@@ -19,7 +20,7 @@ function botBrain(){
   return 'north';
 }
 
-botInitialization(function(){console.log("finishedCycle!")});
+botInitialization();
 
 /*
 bot.run(function(data) {
