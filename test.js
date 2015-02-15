@@ -1,44 +1,19 @@
 var Bot = require('bot');
 var bot = new Bot('nwiltp4r', 'training');
-var gameStart = false;
 var _this = bot;
-var async = require('async');
 var goDir;
-var request = require('request');
 // bot.startGame    bot.parseTheData    bot.newRequest
 
-async.series([
-  function(callback){
-    console.log("async startGame()");
-    if(gameStart === false){
-      gameStart = true;
-      bot.startGame();
 
-    }
-    else{
-      bot.newRequest(goDir);
-    }
-    callback();
-  },
-  function(callback){
-    console.log("async parseTheData");
-    bot.parseTheData();
-    callback();
-  },
-  function(callback){
-    console.log("async botBrai");
-    botBrain();
-    callback();
-  }
-]);
-
-function botBrain(){
+Bot.prototype.botBrain = function(){
   //console.log("botBrain!");
   var rand = Math.floor(Math.random() * 3);
   var dirs = ["north", "south", "east", "west"];
-  goDir = dirs[rand];
+  bot.goDir = dirs[rand];
 
 }
+
+bot.runBot();
   
 
 
