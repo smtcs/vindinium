@@ -1,16 +1,25 @@
 var Bot = require('bot');
 var bot = new Bot('nwiltp4r', 'training');
-var _this = bot;
 var goDir;
 // bot.startGame    bot.parseTheData    bot.newRequest
 
 
-Bot.prototype.botBrain = function(){
-  //console.log("botBrain!");
+Bot.prototype.botBrain = function(callback){
+  _this = bot;
+
+  
   var rand = Math.floor(Math.random() * 3);
   var dirs = ["north", "south", "east", "west"];
   bot.goDir = dirs[rand];
+  console.log("botBrain! : " + callback);
 
+
+
+
+
+
+  
+  callback();
 }
 
 bot.runBot();
