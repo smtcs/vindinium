@@ -14,6 +14,7 @@ Bot.prototype.botBrain = function(){
   
     var rand = Math.floor(Math.random() * 3);
     var dirs = ["north", "south", "east", "west"];
+    console.log("pathtogo!: " + bot.helpers.pathfinder([3,4],[4,4]));
     bot.goDir = dirs[rand];
 
 
@@ -21,7 +22,9 @@ Bot.prototype.botBrain = function(){
 
 
 ///////////Do not remove anything below here////////////////
-    resolve();
+   
+    reject();//temp reject
+    // resolve();
   });
 }
 
