@@ -1,32 +1,41 @@
 var Bot = require('bot');
 var bot = new Bot('nwiltp4r', 'training');
 var goDir;
+var Promise = require('es6-promise').Promise;
 // bot.startGame    bot.parseTheData    bot.newRequest
 
-
-Bot.prototype.botBrain = function(callback){
-  _this = bot;
-
-  
-  var rand = Math.floor(Math.random() * 3);
-  var dirs = ["north", "south", "east", "west"];
-  bot.goDir = dirs[rand];
-  console.log("botBrain! : " + callback);
-
-
-
-
-
+Bot.prototype.botBrain = function(){
+  return new Promise(function(resolve, reject){
+    _this = bot;
 
   
-  callback();
+    var rand = Math.floor(Math.random() * 3);
+    var dirs = ["north", "south", "east", "west"];
+    bot.goDir = dirs[rand];
+    console.log("botBrain!: "+ bot.goDir);
+
+
+    resolve();
+  });
 }
 
-bot.runBot();
-  
+bot.runGame();
 
 
+/*
+Bot.prototype.runGame = function(){
+  console.log("staring up sendREquest");
+  bot.sendRequest().then(function(){
+    console.log("starting up parse");
+    bot.parseTheData()}).then(function(){
+      console.log("starting up botbrain");
+      bot.botBrain()}).then(function(){
+        console.log("requestingAgain!");
+       bot.requestAgain(bot.goDir)});
+};
 
+bot.runGame();
+*/
 
 
 ////VERSION THAT CALLS ITSELF TOO MANY TIMES/////
