@@ -20,12 +20,11 @@ Bot.prototype.botBrain = function(){
     console.log("bot id: " + bot.yourBot.id);
     console.log("yourbot Pos : " + bot.yourBot.pos.x, bot.yourBot.pos.y);
     console.log("bot 3 pos : " + bot.bot3.pos.x, bot.bot3.pos.y);
-    bot.pathfinder([bot.yourBot.pos.x, bot.yourBot.pos.y], [bot.bot3.pos.x, bot.bot3.pos.y]);
     console.log("pathtogo!:  " + bot.pathDir );
    // console.log("tarven position : " + _this.taverns[0]);
 
-    bot.goDir = bot.pathDir;
-
+    bot.goDir = bot.pathfinder([bot.yourBot.pos.x, bot.yourBot.pos.y], [8,6]);
+    console.log("going this direction!" + bot.goDir);
 
 
 ///////////Do not remove anything below here////////////////
