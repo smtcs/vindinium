@@ -14,18 +14,17 @@ Bot.prototype.botBrain = function(){
   
     var rand = Math.floor(Math.random() * 3);
     var dirs = ["north", "south", "east", "west"];
-    bot.helpers.pathfinder([3,4],[4,4]);
-    console.log("pathtogo!: " + bot.pathDir);
-console.log(bot.map);
-console.log("bot id: " + bot.yourBot.id);
-    bot.helpers.pathfinder([bot.yourBot.pos.x, bot.yourBot.pos.x], [4,6]);
+//    bot.helpers.pathfinder([3,4],[4,4]);
+//    console.log("pathtogo!: " + bot.pathDir);
+    console.log(bot.map);
+    console.log("bot id: " + bot.yourBot.id);
+    console.log("yourbot Pos : " + bot.yourBot.pos.x, bot.yourBot.pos.y);
+    console.log("bot 3 pos : " + bot.bot3.pos.x, bot.bot3.pos.y);
+    bot.pathfinder([bot.yourBot.pos.x, bot.yourBot.pos.y], [bot.bot3.pos.x, bot.bot3.pos.y]);
     console.log("pathtogo!:  " + bot.pathDir );
+   // console.log("tarven position : " + _this.taverns[0]);
 
-
-
-    bot.goDir = dirs[rand];
-
-
+    bot.goDir = bot.pathDir;
 
 
 
