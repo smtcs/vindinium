@@ -1,6 +1,6 @@
 var Bot = require('bot');
 var PF = require('pathfinding');
-var bot = new Bot('nwiltp4r', 'training');
+var bot = new Bot('YOUR_KEY_HERE', 'training');
 var goDir;
 var Promise = require('bluebird');
 
