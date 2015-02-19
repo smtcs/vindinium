@@ -1,3 +1,4 @@
+var fs = require('fs');
 var mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URL);
 
@@ -12,7 +13,16 @@ var Bot = mongoose.model('Bot', BotSchema);
 
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 
-var bot = new Bot({name: 'default', code:"var Bot = require('bot');\n var PF = require('pathfinding'); \n var bot = new Bot('nwiltp4r', 'training'); \nvar goDir;\n var Promise = require('bluebird');\n Bot.prototype.botBrain = function(){ \n  return new Promise(function(resolve, reject){ \n    _this = bot; \n/////////////Write your Bot Below Here////////////////////// \n////////////Set bot.goDir in the direction you want to go/// \n \n   \n    var rand = Math.floor(Math.random() * 3); \n    var dirs = ["north", "south", "east", "west"]; \n    bot.goDir = dirs[rand]; \n \n \n ///////////Do not remove anything below here//////////////// \n    resolve(); \n  }); \n} \n \n bot.runGame();"})
+// Grabs the code from the test.js file to be used for default/starter bot code
+var defaultCode = fs.readFile('test.js', 'utf8', function (err,data) {
+  if (err) {
+    return console.log(err);
+  }
+  console.log(data);
+  return data;
+});
+
+var bot = new Bot({name: 'default', code:defaultCode})
 Bot.count({}).exec().then(function(c) {
   if(c < 1) {
     bot.save();
