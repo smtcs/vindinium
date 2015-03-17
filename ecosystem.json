@@ -4,7 +4,7 @@
     "script"    : "bin/www",
     "env_prod" : {
       "NODE_ENV": "production",
-      "MONGO_URL": "mongodb://user:pass@ds041861.mongolab.com:41861/vind-client"
+      "MONGO_URL": "mongodb://user:pass@proximus.modulusmongo.net:27017/yryqA5wo"
     }
   }],
   "deploy" : {
