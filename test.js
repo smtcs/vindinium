@@ -7,16 +7,16 @@ var Promise = require('bluebird');
 Bot.prototype.botBrain = function(){
   return new Promise(function(resolve, reject){
     _this = bot;
-/////////////Write your Bot Below Here//////////////////////
-////////////Set bot.goDir in the direction you want to go///
+    /* Write your bot below Here */
+    /* Set `bot.goDir` in the direction you want to go */
 
-  
+
     var rand = Math.floor(Math.random() * 3);
     var dirs = ["north", "south", "east", "west"];
     bot.goDir = dirs[rand];
 
 
-///////////Do not remove anything below here////////////////
+    /* DON'T REMOVE ANTYTHING BELOW THIS LINE */
     resolve();
   });
 }
