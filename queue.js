@@ -1,7 +1,7 @@
 var Promise = require('bluebird');
 var debug = require('debug')('app:queue');
 var kue = require('kue');
-var jobs = kue.createQueue();
+var jobs = kue.createQueue({redis: process.env.REDIS_URL});
 
 jobs.process('run bot', 20, function(job, done) {
   /**
