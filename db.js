@@ -1,6 +1,6 @@
 var fs = require('fs');
 var mongoose = require('mongoose');
-mongoose.connect(process.env.MONGO_URL);
+mongoose.connect('mongodb://localhost/vind');
 
 var BotSchema = mongoose.Schema({
   name: {type: String, default: '', unique: true},
