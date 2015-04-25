@@ -7,8 +7,8 @@ var Promise = require('bluebird');
 Bot.prototype.botBrain = function() {
     return new Promise(function(resolve, reject) {
         _this = bot;
-        /* Write your bot below Here */
-        /* Set `bot.goDir` in the direction you want to go */  //<--- In this case, set myDir to what you want and it will set bot.goDir to that at the end.
+        //////* Write your bot below Here *//////
+        //////* Set `myDir` in the direction you want to go and then bot.goDir is set to myDir at the bottom *////////
         
         /*                                      * 
          * This Code is global data!            *
@@ -48,7 +48,7 @@ Bot.prototype.botBrain = function() {
         
         /*                                                                                                                              * 
          * This Code Sets your direction based on myDir.  If you are trying to go to a place that you can't reach, you move randomly.   *
-         * Otherwise you move in the direction set by your code.                                                                        */
+         * Otherwise you move in the direction set by your code.  Feel free to change this code if you want.                            */
         if(myDir === "none") {
             console.log("Going Random!");
             var rand = Math.floor(Math.random() * 4);
@@ -60,7 +60,7 @@ Bot.prototype.botBrain = function() {
         
         
         
-        /* DON'T REMOVE ANTYTHING BELOW THIS LINE */
+        ///////////* DON'T REMOVE ANTYTHING BELOW THIS LINE *//////////////
         resolve();
     });
 }
